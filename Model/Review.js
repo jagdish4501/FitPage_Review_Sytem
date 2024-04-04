@@ -8,7 +8,7 @@ const ReviewSchema = new Schema({
         type: String,
         required: true,
     },
-    type: {
+    type: {//type 1-> registration , 2->event experiance, 3-> breakfast exp,4->overall experiance
         type: Number,
         required: true
     },
@@ -21,6 +21,9 @@ const ReviewSchema = new Schema({
         required: true
     }
 });
+
+// Create a compound index on event_id and user_id to enforce uniqueness
+ReviewSchema.index({ event_id: 1, user_id: 1 }, { unique: true });
 
 const Review = model('Review', ReviewSchema);
 

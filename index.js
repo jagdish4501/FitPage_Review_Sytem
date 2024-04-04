@@ -1,5 +1,5 @@
 import connectDB from './db/connect.js'
-// import saveUser from './Controlar/task.js'
+import rout from './Controlar/rout.js'
 import http from 'http';
 import 'dotenv/config'
 
@@ -13,22 +13,8 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Connection with cross Origin are enbled' }));
     } else {
-        const userParams = {
-            user_name: 'john_doe',
-            email: 'john@example.com',
-            password: 'password123',
-            name: 'John Doe'
-        };
-        // saveUser(userParams).then(() => {
-        //     console.log("user saved");
-        // }).catch(() => {
-        //     cons
-        // })
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'api is in working' }));
+        rout(req, res);
     }
-
-
 })
 
 const start = async () => {
