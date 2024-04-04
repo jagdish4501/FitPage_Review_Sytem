@@ -7,6 +7,7 @@ async function fetchReview(req, res) {
         const reviews = await Review.find({ event_id: data.event_id });
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ "success": true, 'data': reviews }));
+
     } catch (error) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ "success": false, "message": 'server side error', 'error': error }));

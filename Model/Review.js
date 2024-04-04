@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+
 const ReviewSchema = new Schema({
     event_id: {
         type: String,

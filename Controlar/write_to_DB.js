@@ -1,6 +1,7 @@
 import body_data from "../Middleware/body_data.js";
 import Review from '../Model/Review.js'
 import Event from '../Model/Event.js'
+import RReview from "../Model/ReportedReview.js";
 
 
 const submitReview = async (req, res) => {
@@ -28,6 +29,19 @@ const registerEvent = async (req, res) => {
         res.end(JSON.stringify({ "success": false, "message": 'server side error', 'error': error }));
     }
 }
-export { submitReview, registerEvent }
+
+const reportReview = async (req, res) => {
+    try {
+        const data = await body_data(req);
+        const reported_review = new RReview(data);
+        const savedRReview = await reported_review.save();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ "success": true, 'savedRReview': savedRReview }));
+    } catch (error) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ "success": false, "message": 'server side error', 'error': error }));
+    }
+}
+export { submitReview, registerEvent, reportReview }
 
 

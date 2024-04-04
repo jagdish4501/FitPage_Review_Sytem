@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const ReportSchema = new Schema({
     review_id: {
-        type: string,
+        type: String,
         required: true,
     },
     user_id: {
@@ -10,7 +10,7 @@ const ReportSchema = new Schema({
         required: true,
     },
     description: {
-        type: Number,
+        type: String,
         required: true
     },
 });

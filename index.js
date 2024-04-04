@@ -1,7 +1,7 @@
-import connectDB from './db/connect.js'
-import rout from './Controlar/rout.js'
+import connectDB from './db/connect.js';
+import rout from './Controlar/rout.js';
 import http from 'http';
-import 'dotenv/config'
+import 'dotenv/config';
 
 const PORT = 5000;
 
