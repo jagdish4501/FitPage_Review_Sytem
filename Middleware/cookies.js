@@ -1,9 +1,8 @@
 // Function to set cookie
-function setCookie(res, name, value, options) {
-    const cookie = `${name}=${value};${options}`;
-    res.setHeader('Cookie', cookie);
+function setCookie(res, token) {
+    token = `token=${token}; path=/;secure=true`
+    res.setHeader('Set-Cookie', token);
 }
-
 // Function to parse cookie
 function parseCookies(req) {
     const cookieHeader = req.headers.cookie;
@@ -11,7 +10,9 @@ function parseCookies(req) {
         return {};
     }
     return cookieHeader.split(';').reduce((cookies, cookie) => {
-        const [name, value] = cookie.trim().split('=').map(decodeURIComponent);
+        const index = cookie.indexOf('=');
+        const name = cookie.substring(0, index).trim();
+        const value = decodeURIComponent(cookie.substring(index + 1).trim());
         cookies[name] = value;
         return cookies;
     }, {});

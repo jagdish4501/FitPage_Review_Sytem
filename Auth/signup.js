@@ -1,5 +1,6 @@
 import User from '../Model/User.js'
 import body_data from '../Middleware/body_data.js';
+import token from '../Auth/jwt_token.js'
 import { setCookie } from '../Middleware/cookies.js'
 
 const signup = async (req, res) => {
@@ -10,11 +11,11 @@ const signup = async (req, res) => {
         if (!user_name && !email) {
             const newUser = new User(data);
             const savedUser = await newUser.save();
-            setCookie(res, "user_name", data.user_name, data.name);
+            const btoken = token(savedUser._id);
+            setCookie(res, btoken);
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": true, 'savedReview': savedUser }));
         } else {
-
             let message = {};
             if (email)
                 message.email = "email already exist";
