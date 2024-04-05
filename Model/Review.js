@@ -1,30 +1,51 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
+
+const { Schema, model } = mongoose;
 
 const ReviewSchema = new Schema({
-    event_id: {
-        type: String,
-        required: true,
+    event: {
+        type: Schema.Types.ObjectId,
+        ref: 'Event',
+        required: true
     },
-    user_id: {
-        type: String,
-        required: true,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    type: {//type 1-> registration , 2->event experiance, 3-> breakfast exp,4->overall experiance
+    registrationExperience: {
         type: Number,
         required: true
     },
-    rating: {
+    eventExperience: {
         type: Number,
         required: true
     },
-    review: {
-        type: String,
+    breakfastExperience: {
+        type: Number,
         required: true
-    }
+    },
+    overallRating: {
+        type: Number,
+        required: true
+    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    reports: [{
+        reporter: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        reason: String
+    }],
+    flagged: {
+        type: Boolean,
+        default: false
+    },
+    response: String
 });
-
-// Create a compound index on event_id and user_id to enforce uniqueness
-ReviewSchema.index({ event_id: 1, user_id: 1 }, { unique: true });
 
 const Review = model('Review', ReviewSchema);
 
