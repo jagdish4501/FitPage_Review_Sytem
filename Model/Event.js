@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
 const EventSchema = new Schema({
-    org_id: {
-        type: String,
+    user: {
+        type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
+        required: true
     },
     name_of_event: {
         type: String,

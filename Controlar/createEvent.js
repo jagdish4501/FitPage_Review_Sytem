@@ -1,7 +1,7 @@
 import body_data from "../Middleware/body_data.js";
 import Event from '../Model/Event.js'
 
-const registerEvent = async (req, res) => {
+const createEvent = async (req, res) => {
     try {
         const data = await body_data(req);
         const newEvent = new Event(data);
@@ -14,6 +14,6 @@ const registerEvent = async (req, res) => {
     }
 }
 
-export { registerEvent }
+export { createEvent }
 
 
