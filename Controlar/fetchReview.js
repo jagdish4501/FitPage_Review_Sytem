@@ -4,7 +4,7 @@ import body_data from "../Middleware/body_data.js";
 async function fetchReview(req, res) {
     try {
         const data = await body_data(req);
-        const reviews = await Review.find({ event_id: data.event_id });
+        const reviews = await Review.find({ event: data.event_id });
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ "success": true, 'data': reviews }));
 

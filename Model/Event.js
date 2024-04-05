@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 const EventSchema = new Schema({
     org_id: {
         type: String,
+        ref: 'User',
         required: true,
     },
     name_of_event: {

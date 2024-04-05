@@ -44,7 +44,9 @@ const ReviewSchema = new Schema({
         type: Boolean,
         default: false
     },
-    response: String
+    response: {
+        type: String
+    }
 });
 
 const Review = model('Review', ReviewSchema);

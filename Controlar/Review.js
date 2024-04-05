@@ -10,13 +10,14 @@ async function createReview(req, res) {
         if (existingReview) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": false, message: 'You have already reviewed this event' }));
-        }
-        // Create new review
-        const review = new Review({ event: eventId, user: userId, registrationExperience, eventExperience, breakfastExperience, overallRating });
-        await review.save();
+        } else {
+            // Create new review
+            const review = new Review({ event: eventId, user: userId, registrationExperience, eventExperience, breakfastExperience, overallRating });
+            await review.save();
 
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ "success": true, message: 'Review created successfully' }));
+            res.writeHead(201, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ "success": true, message: 'Review created successfully' }));
+        }
     } catch (error) {
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ "success": false, error: error.message }));
@@ -31,16 +32,16 @@ async function likeReview(req, res) {
         if (!review) {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": false, message: 'Review not found' }));
-        }
-        // Check if the user has already liked the review
-        if (review.likes.includes(userId)) {
+        } else if (review.likes.includes(userId)) {
+            // Check if the user has already liked the review
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": false, message: 'You have already liked this review' }));
+        } else {
+            review.likes.push(userId);
+            await review.save();
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ "success": true, message: 'Review liked successfully' }));
         }
-        review.likes.push(userId);
-        await review.save();
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ "success": true, message: 'Review liked successfully' }));
     } catch (error) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ "success": false, error: error.message }));
@@ -55,12 +56,14 @@ async function reportReview(req, res) {
         if (!review) {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": false, message: 'Review not found' }));
+            return;
         }
         // Check if the user has already reported the review
         const existingReport = review.reports.find(report => report.reporter.toString() === userId);
         if (existingReport) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": false, message: 'You have already reported this review' }));
+            return;
         }
         review.reports.push({ reporter: userId, reason });
         // Check if the review needs to be flagged
