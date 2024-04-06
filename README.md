@@ -18,10 +18,10 @@ The following endpoints are available:
 - **POST /api/login**: Allows users to log in.
 - **GET /api/fetchReview**: Retrieves reviews for a specific event.
 - **POST /api/createReview**: Allows authorized users to submit a review for an event.
-- **POST /api/reportReview**: Allows users to report a review.
-- **POST /api/likeReview**: Allows users to like a review.
-- **POST /api/respondToReview**: Allows organizers to respond to reviews.
-- **POST /api/createEvent**: Allows organizers to create an event.
+- **POST /api/reportReview**: Allows authorized users to report a review.
+- **POST /api/likeReview**: Allows authorized users to like a review.
+- **POST /api/respondToReview**: Allows authorized organizers to respond to reviews.
+- **POST /api/createEvent**: Allows authorized organizers to create an event.
 
 ## Rating Criteria
 
@@ -33,7 +33,7 @@ Users can rate the following criteria for events:
 
 ## Additional Features
 
-- **Sorting feature:**: Fetching event reviews in sorted order of rating.
+- **Generate Summary**: Generates a summary of reviews for a specific event.
 - **Retrieve Ratings**: Retrieves ratings for each of the criteria mentioned above.
 - **Pagination**: Enables pagination for browsing through ratings/reviews, ensuring efficient handling of large datasets.
 
@@ -67,3 +67,7 @@ fetch('/api/createReview', {
 .then(response => response.json())
 .then(data => console.log(data))
 .catch(error => console.error('Error:', error));
+
+
+
+
