@@ -87,11 +87,12 @@ async function respondToReview(req, res) {
         if (!review) {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ "success": false, message: 'Review not found' }));
+        } else {
+            review.response = response;
+            await review.save();
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ "success": true, message: 'Response added to review successfully' }));
         }
-        review.response = response;
-        await review.save();
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ "success": true, message: 'Response added to review successfully' }));
     } catch (error) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ "success": false, error: error.message }));
